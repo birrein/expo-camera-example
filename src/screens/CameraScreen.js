@@ -9,7 +9,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Slider,
   Platform,
 } from "react-native";
 import GalleryScreen from "./GalleryScreen";
@@ -76,12 +75,10 @@ export default class CameraScreen extends React.Component {
     showMoreOptions: false,
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { status } = await Camera.requestCameraPermissionsAsync();
     this.setState({ permissionsGranted: status === "granted" });
-  }
 
-  componentDidMount() {
     FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + "photos", {
       intermediates: true,
     }).catch((e) => {

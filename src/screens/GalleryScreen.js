@@ -8,8 +8,6 @@ import {
   ScrollView,
 } from "react-native";
 
-import * as Permissions from "expo-permissions";
-
 import * as FileSystem from "expo-file-system";
 
 import * as MediaLibrary from "expo-media-library";
@@ -46,7 +44,7 @@ export default class GalleryScreen extends React.Component {
     const photos = this.state.selected;
 
     if (photos.length > 0) {
-      const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+      const { status } = await MediaLibrary.requestPermissionsAsync();
 
       if (status !== "granted") {
         throw new Error("Denied CAMERA_ROLL permissions!");

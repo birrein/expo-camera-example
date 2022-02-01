@@ -1,7 +1,7 @@
-import React from 'react';
-import { Image, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import * as FaceDetector from 'expo-face-detector';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { Image, StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import * as FaceDetector from "expo-face-detector";
+import { Ionicons } from "@expo/vector-icons";
 
 const pictureSize = 150;
 
@@ -29,8 +29,8 @@ export default class Photo extends React.Component {
 
   detectFace = () =>
     FaceDetector.detectFacesAsync(this.props.uri, {
-      detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
-      runClassifications: FaceDetector.FaceDetectorClassifications.all,
+      detectLandmarks: 2,
+      runClassifications: 2,
     })
       .then(this.facesDetected)
       .catch(this.handleFaceDetectionError);
@@ -72,10 +72,12 @@ export default class Photo extends React.Component {
 
   handleFaceDetectionError = (error) => console.warn(error);
 
-  renderFaces = () => this.state.image && this.state.faces && this.state.faces.map(this.renderFace);
+  renderFaces = () =>
+    this.state.image &&
+    this.state.faces &&
+    this.state.faces.map(this.renderFace);
 
   renderFace = (face, index) => {
-    console.log(face);
     const { image } = this.state;
     const { scaleX, scaleY, offsetX, offsetY } = this.getImageDimensions(image);
     const layout = {
@@ -95,7 +97,9 @@ export default class Photo extends React.Component {
           { rotateY: `${(face.yawAngle || 0).toFixed(0)}deg` },
         ]}
       >
-        <Text style={styles.faceText}>😁 {(face.smilingProbability * 100).toFixed(0)}%</Text>
+        <Text style={styles.faceText}>
+          😁 {(face.smilingProbability * 100).toFixed(0)}%
+        </Text>
       </View>
     );
   };
@@ -110,7 +114,9 @@ export default class Photo extends React.Component {
         activeOpacity={1}
       >
         <Image style={styles.picture} source={{ uri }} />
-        {this.state.selected && <Ionicons name="md-checkmark-circle" size={30} color="#4630EB" />}
+        {this.state.selected && (
+          <Ionicons name="md-checkmark-circle" size={30} color="#4630EB" />
+        )}
         <View style={styles.facesContainer}>{this.renderFaces()}</View>
       </TouchableOpacity>
     );
@@ -119,22 +125,22 @@ export default class Photo extends React.Component {
 
 const styles = StyleSheet.create({
   picture: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     right: 0,
     left: 0,
     top: 0,
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   pictureWrapper: {
     width: pictureSize,
     height: pictureSize,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     margin: 5,
   },
   facesContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     right: 0,
     left: 0,
@@ -143,17 +149,17 @@ const styles = StyleSheet.create({
   face: {
     borderWidth: 2,
     borderRadius: 2,
-    position: 'absolute',
-    borderColor: '#FFD700',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    position: "absolute",
+    borderColor: "#FFD700",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   faceText: {
-    color: '#FFD700',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "#FFD700",
+    fontWeight: "bold",
+    textAlign: "center",
     margin: 2,
     fontSize: 10,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
 });
